@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import com.erickeugenio.guessinggame.databinding.FragmentGameBinding
 
 
@@ -39,6 +40,19 @@ class GameFragment : Fragment() {
 
         secretWordDisplay = deriveSecretWordDisplay()
         updateScreen()
+
+        binding.guessButton.setOnClickListener() {
+            makeGuess(binding.guess.text.toString().uppercase())
+            binding.guess.text = null
+            updateScreen()
+
+            if (isWon() || isLost()) {
+              val action = GameFragmentDirections
+                  .actionGameFragmentToResultFragment(wonLostMessage())
+
+                view.findNavController().navigate(action)
+            }
+        }
 
         return view
 
