@@ -1,5 +1,6 @@
 package com.erickeugenio.guessinggame
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
@@ -15,13 +16,13 @@ class GameViewModel : ViewModel() {
     )
 
     val secretWord = words.random().uppercase()
-    var secretWordDisplay = ""
+    val secretWordDisplay = MutableLiveData<String>()
     var correctGuesses = ""
-    var incorrectGuesses = ""
-    var livesLeft = 5
+    val incorrectGuesses = MutableLiveData("")
+    val livesLeft = MutableLiveData(8)
 
     init {
-        secretWordDisplay = deriveSecretWordDisplay()
+        secretWordDisplay.value = deriveSecretWordDisplay()
     }
 
     fun deriveSecretWordDisplay(): String {
@@ -42,17 +43,17 @@ class GameViewModel : ViewModel() {
         if (guess.length == 1) {
             if (secretWord.contains(guess)) {
                 correctGuesses += guess
-                secretWordDisplay = deriveSecretWordDisplay()
+                secretWordDisplay.value = deriveSecretWordDisplay()
             } else {
-                incorrectGuesses += "$guess "
-                livesLeft--
+                incorrectGuesses.value += "$guess "
+                livesLeft.value = livesLeft.value?.minus(1)
             }
         }
     }
 
-    fun isWon() = secretWord.equals(secretWordDisplay, true)
+    fun isWon() = secretWord.equals(secretWordDisplay.value, true)
 
-    fun isLost() = livesLeft <= 0
+    fun isLost() = (livesLeft.value ?: 0) <= 0
 
     fun wonLostMessage(): String {
         var message = ""
