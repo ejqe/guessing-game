@@ -26,28 +26,28 @@ class GameFragment : Fragment() {
         _binding = FragmentGameBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
+        viewModel = ViewModelProvider(this)[GameViewModel::class.java]
 
 
-        viewModel.incorrectGuesses.observe(viewLifecycleOwner, Observer { newValue ->
+        viewModel.incorrectGuesses.observe(viewLifecycleOwner) { newValue ->
             binding.incorrectGuesses.text = "Incorrect guesses: $newValue"
-        })
+        }
 
-        viewModel.livesLeft.observe(viewLifecycleOwner, Observer { newValue ->
+        viewModel.livesLeft.observe(viewLifecycleOwner) { newValue ->
             binding.lives.text = "You have $newValue lives left"
-        })
+        }
 
-        viewModel.secretWordDisplay.observe(viewLifecycleOwner, Observer { newValue ->
+        viewModel.secretWordDisplay.observe(viewLifecycleOwner) { newValue ->
             binding.word.text = newValue
-        })
+        }
 
-        viewModel.gameOver.observe(viewLifecycleOwner, Observer { newValue ->
+        viewModel.gameOver.observe(viewLifecycleOwner) { newValue ->
             if (newValue) {
                 val action = GameFragmentDirections
                     .actionGameFragmentToResultFragment(viewModel.wonLostMessage())
                 view.findNavController().navigate(action)
             }
-        })
+        }
 
 
         binding.guessButton.setOnClickListener() {
