@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".GameFragment" >
+<data>
+<variable
+    name="gameViewModel"
+    type="com.erickeugenio.guessinggame.GameViewModel" />
+</data>
+
+
+<LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context=".GameFragment">
+    >
 
 
     <TextView
@@ -16,21 +26,21 @@
         android:layout_gravity="center"
         android:textSize="36sp"
         android:letterSpacing="0.1"
-        android:text="HELLO" />
+        android:text="@{gameViewModel.secretWordDisplay}" />
 
     <TextView
         android:id="@+id/lives"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="You have 10 lives left"/>
+        android:text="@{@string/lives_left(gameViewModel.livesLeft)}"/>
 
     <TextView
         android:id="@+id/incorrect_guesses"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:text="Incorrect Guesses: 0"/>
+        android:text="@{@string/incorrect_guesses(gameViewModel.incorrectGuesses)}"/>
 
     <EditText
         android:id="@+id/guess"
@@ -50,3 +60,4 @@
 
 
 </LinearLayout>
+</layout>

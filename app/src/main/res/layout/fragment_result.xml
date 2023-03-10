@@ -1,11 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".ResultFragment">
+    <data>
+        <variable
+            name="resultViewModel"
+            type="com.erickeugenio.guessinggame.ResultViewModel"/>
+
+    </data>
+
+<LinearLayout
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ResultFragment">
+    android:orientation="vertical" >
+
 
 
     <TextView
@@ -13,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="@string/hello_blank_fragment"
+        android:text="@{resultViewModel.result}"
         android:textSize="28sp" />
 
     <Button
@@ -24,3 +34,4 @@
         android:text="Start new game" />
 
 </LinearLayout>
+</layout>
